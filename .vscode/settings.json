@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "e:\\Quotro Admin\\quotroutils\\quotroutils\\Referenced Libraries\\spigot-1.16.4.jar"
+    ]
+}

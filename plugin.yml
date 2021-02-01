@@ -1,0 +1,48 @@
+main: quotdata.plugin.Main
+name: QuotData
+version: 1.0
+author: Peter Miedema
+description: Manage server statistics within the server environment
+commands:
+  countblockunits:
+    description: Returns the number of Blockunits loaded
+    usage: /countblockunits
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  getdata:
+    description: Returns the specified data for a specified Blockunit
+    usage: /getdata <blockunit> [parameter]=buildcount
+    permission: quotdata.advanced
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  addbuilding:
+    description: Adds a building to the specified Blockunit
+    usage: /getdata <blockunit>
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  removebuilding:
+    description: Removed a building to the specified Blockunit
+    usage: /getdata <blockunit>
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  getdetails:
+    description: Returns all data for a specified Blockunit
+    usage: /getdata <blockunit>
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  writedatabase:
+    description: Forces writing of the Quotro Database to the main file.
+    usage: /writedatabase
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+  getbuildingdefinition:
+    description: Returns the official definition of a building in the Kingdom of Quotro.
+    usage: /getbuildingdefinition
+    permission: quotdata.basic
+    permission-message: Sadly, you are locked from the Quotro Database in this instance.
+permissions:
+  quotdata.basic:
+    description: "Regular reading of database and editing of build counts"
+    default: true
+  quotdata.advanced:
+    description: "Administrator and WIP permissions"
+    default: op
