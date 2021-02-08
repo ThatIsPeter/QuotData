@@ -11,7 +11,6 @@ public class BlockUnit {
     int buildingCount;
     int landArea;
     String comments;
-    double buildingDensity;
 
     public BlockUnit(int id, String description, String district, String borough, String settlement, String urbanArea,
             String landmass, int buildingCount, int landArea, String comments) {
@@ -25,7 +24,9 @@ public class BlockUnit {
         this.buildingCount = buildingCount;
         this.landArea = landArea;
         this.comments = comments;
-        this.buildingDensity = this.buildingCount / this.landArea * 1000000;
+    }
+    public double getBuildingDensity() {
+        return this.buildingCount / this.landArea * 1000000;
     }
     public String[] returnArray() {
         // Returns the Blockunit as an array
@@ -63,7 +64,7 @@ public class BlockUnit {
             "Landmass: " + this.landmass +"\n"+
             "Building Count: " + String.valueOf(this.buildingCount) +"\n"+
             "Land area: " + String.valueOf(this.landArea) +" square metres\n"+
-            "Building density: " + String.valueOf(this.buildingDensity) + " buildings per square kilometre\n"+
+            "Building density: " + String.valueOf(this.getBuildingDensity()) + " buildings per square kilometre\n"+
             "Other information: " + this.comments
         );
         return detailString;
