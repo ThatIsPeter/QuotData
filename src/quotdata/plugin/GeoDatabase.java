@@ -86,6 +86,7 @@ public class GeoDatabase {
         try {
             this.dataBase.get(id).addBuilding();
             senderStatement = "Successfully added building to "+String.valueOf(id)+". Building count is now: "+String.valueOf(this.dataBase.get(id).buildingCount);
+            this.writeDataBase(main);
         } catch (NullPointerException e) {
             senderStatement = "Please enter a valid Blockunit number!";
         }
@@ -97,6 +98,7 @@ public class GeoDatabase {
         try {
             this.dataBase.get(id).removeBuilding();
             senderStatement = "Successfully removed building from "+String.valueOf(id)+". Building count is now: "+String.valueOf(this.dataBase.get(id).buildingCount);
+            this.writeDataBase(main);
         } catch (NullPointerException e) {
             senderStatement = "Please enter a valid Blockunit number!";
         }
