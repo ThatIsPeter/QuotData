@@ -7,24 +7,31 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Stream;
+import java.util.Set;
 
-import org.apache.logging.log4j.core.util.Assert;
+import javax.xml.xpath.XPathExpressionException;
 
 // Loads the server database and provides manipulations
 public class GeoDatabase {
     String serverDatabasePath;
     Map<Integer, BlockUnit> dataBase;
     int[] idArray;
+    Map<String, HashSet<Integer>> settlementMap;
     String csvHeader;
+    HashSet<String> settlementSet;
+    HashSet<String> boroughSet;
+    HashSet<String> districtSet;
+    HashSet<String> landmassSet;
 
     public GeoDatabase(Main main, String serverDatabasePath) {
+        // Tries to load the blockunit database and initialises the blockunit objects
         this.serverDatabasePath = serverDatabasePath;
         this.dataBase = new HashMap<Integer, BlockUnit>();
-        this.idArray = new int[]{};
+        this.idArray = new int[] {};
         BufferedReader csvReader;
         try {
             main.Log("Loading the Blockunit database from: " + this.serverDatabasePath);
@@ -44,12 +51,14 @@ public class GeoDatabase {
                 int buildingCount = Integer.parseInt(data[7]);
                 int landArea = Integer.parseInt(data[8]);
                 String comments = data[9];
-                
-                this.idArray = Arrays.copyOf(idArray, idArray.length+1); // TODO a more efficient way of doing this.
-                this.idArray[idArray.length-1] = id;
 
-                BlockUnit blockUnit = new BlockUnit(id, description, district, borough, settlement, urbanArea, landmass, buildingCount, landArea, comments);
-                // main.Log("Succuessfully loaded the Blockunit '" + blockUnit.description + "'");
+                this.idArray = Arrays.copyOf(idArray, idArray.length + 1); // TODO a more efficient way of doing this (convert to a list or a set).
+                this.idArray[idArray.length - 1] = id;
+
+                BlockUnit blockUnit = new BlockUnit(id, description, district, borough, settlement, urbanArea, landmass,
+                        buildingCount, landArea, comments);
+                // main.Log("Succuessfully loaded the Blockunit '" + blockUnit.description +
+                // "'");
                 dataBase.put(id, blockUnit);
             }
             csvReader.close();
@@ -59,6 +68,24 @@ public class GeoDatabase {
         } catch (IOException e) {
             e.printStackTrace();
             main.Log("IO Exception when attempting to load the Blockunit database!");
+        }
+    }
+
+    public void calculateSettlementMap(Main main) {
+        // Using the blockunit database maps all the blockunits to their respective settlement
+        String settlement;
+        HashSet<Integer> idSet;
+        for (Integer id : this.idArray) {
+            settlement = this.dataBase.get(id).settlement;
+            if (!this.settlementMap.containsKey(settlement)) {
+                idSet = new HashSet<>();
+                idSet.add(id); 
+                this.settlementMap.put(settlement, idSet);
+            } else {
+                idSet = settlementMap.get(settlement);
+                idSet.add(id);
+                this.settlementMap.put(settlement, idSet);
+            } 
         }
     }
     public void writeDataBase(Main main) {
@@ -116,6 +143,7 @@ public class GeoDatabase {
     }
     public String getBlockUnitParameter(Main main, int id, String parameter) {
         // Returns the specified parameter of specified blockunit
+        // TODO make this work - currently only returning default buildcount
         String blockUnitData = "Please enter a valid attribute of a Blockunit!";
         try {
             if (parameter == "buildcount" || parameter == "buildingcount" || parameter == "buildings") {
