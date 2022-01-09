@@ -71,6 +71,7 @@ public class Main extends JavaPlugin {
                 return false;
             }
             sender.sendMessage(this.geoDatabase.tryAddBuilding(this, blockUnit));
+            this.geoDatabase.writeDataBase(this);
             return true;
         }
         // /removebuilding <blockunit>
@@ -86,6 +87,7 @@ public class Main extends JavaPlugin {
                 return false;
             }
             sender.sendMessage(this.geoDatabase.tryRemoveBuilding(this, blockUnit));
+            this.geoDatabase.writeDataBase(this);
             return true;
         }
         // /getdetails <blockunit>
