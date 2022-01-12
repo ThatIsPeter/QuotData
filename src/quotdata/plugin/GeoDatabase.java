@@ -143,34 +143,33 @@ public class GeoDatabase {
     }
     public String getBlockUnitParameter(Main main, int id, String parameter) {
         // Returns the specified parameter of specified blockunit
-        // TODO make this work - currently only returning default buildcount
         String blockUnitData = "Please enter a valid attribute of a Blockunit!";
         try {
-            if (parameter == "buildcount" || parameter == "buildingcount" || parameter == "buildings") {
+            if (parameter.equals("buildcount") || parameter.equals("buildingcount") || parameter.equals("buildings")) {
                 blockUnitData = String.valueOf(this.dataBase.get(id).buildingCount);
             }
-            else if (parameter == "landarea") {
+            else if (parameter.equals("landarea")) {
                 blockUnitData = String.valueOf(this.dataBase.get(id).landArea);
             }
-            else if (parameter == "description" || parameter == "name") {
+            else if (parameter.equals("description") || parameter.equals("name")) {
                 blockUnitData = this.dataBase.get(id).description;
             }
-            else if (parameter == "district") {
+            else if (parameter.equals("district")) {
                 blockUnitData = this.dataBase.get(id).district;
             }
-            else if (parameter == "borough") {
+            else if (parameter.equals("borough")) {
                 blockUnitData = this.dataBase.get(id).borough;
             }
-            else if (parameter == "settlement") {
+            else if (parameter.equals("settlement")) {
                 blockUnitData = this.dataBase.get(id).settlement;
             }
-            else if (parameter == "urbanarea" || parameter == "urban_area" || parameter == "urban") {
+            else if (parameter.equals("urbanarea") || parameter.equals("urban_area") || parameter.equals("urban")) {
                 blockUnitData = this.dataBase.get(id).urbanArea;
             }
-            else if (parameter == "landmass" || parameter == "island") {
+            else if (parameter.equals("landmass") || parameter.equals("island")) {
                 blockUnitData = this.dataBase.get(id).landmass;
             }
-            else if (parameter == "comments" || parameter == "info" || parameter == "other") {
+            else if (parameter.equals("comments") || parameter.equals("info") || parameter.equals("other")) {
                 blockUnitData = this.dataBase.get(id).comments;
             }
         } catch (NullPointerException e) {
